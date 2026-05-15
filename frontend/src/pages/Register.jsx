@@ -2,54 +2,49 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import API from "../services/api"
 
-function Login() {
+function Register() {
     const navigate = useNavigate()
 
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [loading, setLoading] = useState(false)
 
-    const handleLogin = async () => {
-        if (!email || !password) {
-            alert("Please enter email and password")
-            return
-        }
-
+    const handleRegister = async () => {
         try {
-            setLoading(true)
-
-            const response = await API.post("/login", {
-                email: email,
-                password: password
+            await API.post("/register", {
+                name,
+                email,
+                password
             })
 
-            localStorage.setItem("token", response.data.access_token)
-
-            alert("Login Successful")
-
-            navigate("/dashboard")
+            alert("Registration successful! Please login.")
+            navigate("/login")
 
         } catch (error) {
-            console.log(error)
-            alert(error.response?.data?.detail || "Login failed")
-        } finally {
-            setLoading(false)
+            alert(error.response?.data?.detail || "Registration failed")
         }
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-
             <div className="bg-white p-8 rounded-2xl shadow-lg w-[400px]">
 
                 <h1 className="text-3xl font-bold text-center text-blue-600">
-                    Login
+                    Register
                 </h1>
+
+                <input
+                    type="text"
+                    placeholder="Enter Name"
+                    className="w-full mt-6 p-3 border rounded-lg"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
 
                 <input
                     type="email"
                     placeholder="Enter Email"
-                    className="w-full mt-6 p-3 border rounded-lg"
+                    className="w-full mt-4 p-3 border rounded-lg"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -63,17 +58,15 @@ function Login() {
                 />
 
                 <button
+                    onClick={handleRegister}
                     className="w-full bg-blue-600 text-white p-3 rounded-lg mt-6"
-                    onClick={handleLogin}
-                    disabled={loading}
                 >
-                    {loading ? "Logging in..." : "Login"}
+                    Register
                 </button>
 
             </div>
-
         </div>
     )
 }
 
-export default Login
+export default Register
