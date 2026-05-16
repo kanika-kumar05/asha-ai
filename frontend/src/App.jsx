@@ -1,12 +1,18 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate
+} from "react-router-dom"
 
 import Home from "./pages/Home"
 import Login from "./pages/Login"
-import Dashboard from "./pages/Dashboard"
 import Register from "./pages/Register"
+import Dashboard from "./pages/Dashboard"
 import Assistant from "./pages/Assistant"
 
 function ProtectedRoute({ children }) {
+
     const token = localStorage.getItem("token")
 
     if (!token) {
@@ -17,16 +23,26 @@ function ProtectedRoute({ children }) {
 }
 
 function App() {
+
     return (
         <BrowserRouter>
 
             <Routes>
 
-                <Route path="/" element={<Home />} />
+                <Route
+                    path="/"
+                    element={<Home />}
+                />
 
-                <Route path="/login" element={<Login />} />
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
 
-                <Route path="/register" element={<Register />} />
+                <Route
+                    path="/register"
+                    element={<Register />}
+                />
 
                 <Route
                     path="/dashboard"

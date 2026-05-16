@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+
 import requests
 
 router = APIRouter()
@@ -11,11 +12,16 @@ class ChatRequest(BaseModel):
 def chat(request: ChatRequest):
 
     prompt = f"""
-You are Asha AI, a kind memory companion for elderly people.
-Reply in simple, calm, caring language.
-Help with medicines, daily routine, memory support, and emotional comfort.
+You are Asha AI, a caring AI companion for elderly people.
 
-User message: {request.message}
+Your job:
+- help with medicines
+- help with memories
+- provide emotional support
+- speak calmly and simply
+
+User message:
+{request.message}
 """
 
     try:
@@ -35,6 +41,8 @@ User message: {request.message}
         }
 
     except Exception as e:
+        print(e)
+
         return {
-            "reply": "I am having trouble thinking right now. Please try again."
+            "reply": "Sorry, I am having trouble thinking right now."
         }

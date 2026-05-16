@@ -13,7 +13,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Allow React frontend to call FastAPI backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -22,7 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routes
 app.include_router(auth_router)
 app.include_router(chat_router)
 
